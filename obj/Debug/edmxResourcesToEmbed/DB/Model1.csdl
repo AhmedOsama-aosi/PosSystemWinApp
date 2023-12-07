@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PosDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SalesBills" Relationship="PosDatabaseModel.FK_SalesBill_Customer" FromRole="Customer" ToRole="SalesBill" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="PosDatabaseModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="SalesBillProducts" Relationship="PosDatabaseModel.FK_SalesBillProducts_Product" FromRole="Product" ToRole="SalesBillProduct" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UesrName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SalesBills" Relationship="PosDatabaseModel.FK_SalesBill_Users" FromRole="User" ToRole="SalesBill" />
+  </EntityType>
+  <EntityContainer Name="PosDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Categories" EntityType="PosDatabaseModel.Category" />
+    <EntitySet Name="sysdiagrams" EntityType="PosDatabaseModel.sysdiagram" />
+    <AssociationSet Name="FK_Product_Category" Association="PosDatabaseModel.FK_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <EntitySet Name="SalesBills" EntityType="PosDatabaseModel.SalesBill" />
+    <EntitySet Name="SalesBillProducts" EntityType="PosDatabaseModel.SalesBillProduct" />
+    <AssociationSet Name="FK_SalesBill_Customer" Association="PosDatabaseModel.FK_SalesBill_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="SalesBill" EntitySet="SalesBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesBillProducts_Product" Association="PosDatabaseModel.FK_SalesBillProducts_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="SalesBillProduct" EntitySet="SalesBillProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesBill_Users" Association="PosDatabaseModel.FK_SalesBill_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SalesBill" EntitySet="SalesBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesBillProducts_SalesBill" Association="PosDatabaseModel.FK_SalesBillProducts_SalesBill">
+      <End Role="SalesBill" EntitySet="SalesBills" />
+      <End Role="SalesBillProduct" EntitySet="SalesBillProducts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="PosDatabaseModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Product_Category">
+    <End Type="PosDatabaseModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="PosDatabaseModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SalesBill">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="total" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="userId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="PosDatabaseModel.FK_SalesBill_Customer" FromRole="SalesBill" ToRole="Customer" />
+    <NavigationProperty Name="User" Relationship="PosDatabaseModel.FK_SalesBill_Users" FromRole="SalesBill" ToRole="User" />
+    <NavigationProperty Name="SalesBillProducts" Relationship="PosDatabaseModel.FK_SalesBillProducts_SalesBill" FromRole="SalesBill" ToRole="SalesBillProduct" />
+  </EntityType>
+  <EntityType Name="SalesBillProduct">
+    <Key>
+      <PropertyRef Name="salesBillId" />
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="salesBillId" Type="Int32" Nullable="false" />
+    <Property Name="productId" Type="Int32" Nullable="false" />
+    <Property Name="productPrice" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="PosDatabaseModel.FK_SalesBillProducts_Product" FromRole="SalesBillProduct" ToRole="Product" />
+    <NavigationProperty Name="SalesBill" Relationship="PosDatabaseModel.FK_SalesBillProducts_SalesBill" FromRole="SalesBillProduct" ToRole="SalesBill" />
+  </EntityType>
+  <Association Name="FK_SalesBill_Customer">
+    <End Type="PosDatabaseModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="PosDatabaseModel.SalesBill" Role="SalesBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesBill">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesBillProducts_Product">
+    <End Type="PosDatabaseModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="PosDatabaseModel.SalesBillProduct" Role="SalesBillProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesBillProduct">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesBill_Users">
+    <End Type="PosDatabaseModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="PosDatabaseModel.SalesBill" Role="SalesBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesBill">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesBillProducts_SalesBill">
+    <End Type="PosDatabaseModel.SalesBill" Role="SalesBill" Multiplicity="1" />
+    <End Type="PosDatabaseModel.SalesBillProduct" Role="SalesBillProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesBill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesBillProduct">
+        <PropertyRef Name="salesBillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
