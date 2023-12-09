@@ -1,5 +1,5 @@
 # PosSystemWinApp
 
 Point of Sale System
-![login page](/screenshots/screenshot1.png)
+![login page](/screenshots/Screenshot1.png)
 
