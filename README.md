@@ -2,7 +2,7 @@
 
 ## Point of Sale System  
 
-Login Page
+Login Page  
 ![login page](/screenshots/Screenshot1.png "Login page")
 
 Product Management Page
